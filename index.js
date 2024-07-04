@@ -19,7 +19,7 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username=msg.chat.username
 
-  user[chatId]=username
+  user[`${chatId}`]=username
   
 
   bot.sendMessage(chatId,`Check the website on bot bro`);
