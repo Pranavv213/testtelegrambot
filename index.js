@@ -24,6 +24,8 @@ bot.onText(/\/start/, (msg) => {
 
 // Handle request to fetch user data
 app.get('/', (req, res) => {
+
+    let msg="hello"
     const username=msg.chat.username
 
     res.send(`Hello ${username}`)
