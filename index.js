@@ -18,17 +18,19 @@ bot.onText(/\/start/, (msg) => {
   const username=msg.chat.username
 
   console.log(username)
+  localStorage.setItem('username',username)
 
-  bot.sendMessage(chatId,`Hare Krishna ${user} Bro, its bro`);
+  bot.sendMessage(chatId,`Check the website on bot bro`);
+
 });
 
 // Handle request to fetch user data
 app.get('/', (req, res) => {
 
-    let msg="hello"
-    const username=msg.chat.username
+ 
+  
 
-    res.send(`Hello ${username}`)
+    res.send(`Hello ${localStorage.getItem('username')}`)
 });
 
 // Start the server
