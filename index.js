@@ -2,6 +2,8 @@ const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 const path = require('path');
 
+let user={}
+
 const app = express();
 const port = process.env.PORT || 3000;
 const token = '7261460030:AAHhZ-j1KXD1d9DWspXkTPTFhhGbxST5FU4'; // Replace with your Telegram Bot token
@@ -17,8 +19,8 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username=msg.chat.username
 
-  console.log(username)
-  localStorage.setItem('username',username)
+  user[chatId]=username
+  
 
   bot.sendMessage(chatId,`Check the website on bot bro`);
 
@@ -27,10 +29,10 @@ bot.onText(/\/start/, (msg) => {
 // Handle request to fetch user data
 app.get('/', (req, res) => {
 
- 
-  
+  let chat=req.query.chatId
+  let username=user[chat]
 
-    res.send(`Hello ${localStorage.getItem('username')}`)
+    res.send(`Hello ${username}`)
 });
 
 // Start the server
