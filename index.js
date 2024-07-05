@@ -2,37 +2,23 @@ const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 const path = require('path');
 
-let user={}
-
 const app = express();
 const port = process.env.PORT || 3000;
-const token = '7261460030:AAHhZ-j1KXD1d9DWspXkTPTFhhGbxST5FU4'; // Replace with your Telegram Bot token
+const token = '7337053205:AAGQHD9AxMWny8nURm9PpPg0r2-jV8ATWXQ'; // Replace with your Telegram Bot token
+
+const bot = new TelegramBot(token, { polling: true });
 
 // Serve static files (e.g., index.html)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize Telegram Bot
-const bot = new TelegramBot(token, { polling: true });
-
-// Handle /start command to send the HTML file with a greeting button
+// Handle /start command
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  const username=msg.chat.username
+  const username = msg.chat.username;
 
-  user[`${chatId}`]=username
-  
-
-  bot.sendMessage(chatId,`Check the website on bot bro`);
-
-});
-
-// Handle request to fetch user data
-app.get('/', (req, res) => {
-
-  let chat=req.query.chatId
-  let username=user[chat]
-
-    res.send(`Hello ${username}`)
+  // Respond with a link to the web app
+  const link = `https://robitcoin.000webhostapp.com/home.html/?chatId=${chatId}&username=${encodeURIComponent(username)}`;
+  bot.sendMessage(chatId, `Hello ${username}! Click this link to store your username: ${link}`);
 });
 
 // Start the server
